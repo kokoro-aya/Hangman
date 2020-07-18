@@ -1,31 +1,35 @@
 # Write your code here
 import random
 
-print("""
-H A N G M A N
-""")
+print("""H A N G M A N""")
 word = ["python", "java", "kotlin", "javascript"]
 secret = random.choice(word)
 
 guess = '-' * len(secret)
 guessed = []
 
-for _ in range(0, 8):
-    print(guess)
+attempt = 8
+
+while attempt > 0:
+    print("\n" + guess)
     letter = input("Input a letter: ")
-    if letter in secret and letter not in guessed:
+    if letter in guessed:
+        print("No improvements")
+        attempt -= 1
+    elif letter in secret:
         occurrence = [i for i in range(len(secret)) if secret[i] == letter]
         for index in occurrence:
             guess = guess[:index] + letter + guess[index + 1:]
         guessed.append(letter)
+        if guess == secret:
+            break
     else:
         print("No such letter in the word")
-    print()
+        attempt -= 1
 
-
-print("""
-Thanks for playing!
-We'll see how well you did in the next stage
-""")
-
-# print("You survived!" if guess == secret else "You are hanged!")
+if attempt == 0:
+    print("You are hanged!")
+else:
+    print("""You guessed the word!
+You survived!
+    """)
